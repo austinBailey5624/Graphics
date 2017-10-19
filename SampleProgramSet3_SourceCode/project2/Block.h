@@ -11,8 +11,8 @@
 class Block : public ModelView
 {
 public:
-	Block(ShaderIF* sIF, float cx, float cy, float cz, // lower left corner
-	      float lx, float ly, float lz);// lengths in 3 directions
+	Block(ShaderIF* sIF, float cx, float cy, float cz,
+	      float lx, float ly, float lz,float r, float g, float b);//added colors
 	virtual ~Block();
 
 	// xyzLimits: {mcXmin, mcXmax, mcYmin, mcYmax, mcZmin, mcZmax}

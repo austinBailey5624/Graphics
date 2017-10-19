@@ -52,7 +52,13 @@ class RectPrism : public ModelView
 		float zmax;
 		float theta;
 
-		static GLunit indexList[3][4];
+		Block* top;
+		Block* bottom;
+		Block* left;
+		Block* right;
+		Block* front;
+		Block* back;
 
+		static GLunit indexList[3][4];
 };
 #endif

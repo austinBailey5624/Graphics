@@ -14,14 +14,14 @@ GLuint Block::indexList[3][4] = {
 	{ 1, 7, 3, 5 }  // ymax face
 };
 
-Block::Block(ShaderIF* sIF, float cx, float cy, float cz, float lx, float ly, float lz) :
+Block::Block(ShaderIF* sIF, float cx, float cy, float cz, float lx, float ly, float lz, float r, float g, float b) :
 	shaderIF(sIF)
 {
 	xmin = cx; xmax = cx + lx;
 	ymin = cy; ymax = cy + ly;
 	zmin = cz; zmax = cz + lz;
-	
-	kd[0] = 0.7; kd[1] = 0.7; kd[2] = 0.0;
+
+	kd[0] = r; kd[1] = g; kd[2] = b;
 	defineBlock();
 }
 

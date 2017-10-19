@@ -26,7 +26,7 @@ void ModelView::getMatrices(cryph::Matrix4x4& mc_ec, cryph::Matrix4x4& ec_lds)
 {
 	// TODO: Delete or comment out the following std::cout statement when
 	//       everything else is done here.
-	std::cout << "In project 2, you must implement ModelView::getMatrices in ModelView_Additions.c++\n";
+	//std::cout << "In project 2, you must implement ModelView::getMatrices in ModelView_Additions.c++\n";
 	// 1. Create the mc_ec matrix:
 	//    Create a local variable of type Matrix4x4 called M_ECu from the eye,
 	//    center, and up. Recall that those values are initialized in the main

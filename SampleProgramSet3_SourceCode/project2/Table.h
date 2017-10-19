@@ -35,7 +35,7 @@ private:
 class Table : public ModelView
 {
 public:
-	Table(ShaderIF* sIF, float blx, float bly, float blz, float urx, float ury, float urz);
+	Table(ShaderIF* sIF, float blx, float bly, float blz, float lx, float ly, float lz,float r, float g, float b);
 	~Table();
 	bool handleCommand(unsigned char anASCIIChar, double ldsX, double ldsY);
 	void getMCBoundingBox(double* xyzLimitsF) const;

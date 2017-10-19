@@ -48,7 +48,7 @@ void TEMPLATE_Subclass::render()
 
 typedef float vec3[3];
 
-Table::Table(ShaderIF* sIF, float blx, float bly, float blz, float lx, float ly, float lz) : shaderIF(sIF)
+Table::Table(ShaderIF* sIF, float blx, float bly, float blz, float lx, float ly, float lz, float r, float g, float b) : shaderIF(sIF)
 {
 	xmin = blx;
 	ymin = bly;
@@ -56,39 +56,12 @@ Table::Table(ShaderIF* sIF, float blx, float bly, float blz, float lx, float ly,
 	xmax = xmin + lx;
 	ymax = ymin + ly;
 	zmax = zmin + lz;
-	kd[0] = .3;
-	kd[1] = .28;
-	kd[2] = .26;
 
-	//The Affpoints without prefixes are for the entire table
-	/*
-	cryph::AffPoint lbf(xmin, ymin, zmax);//left bottom front
-	cryph::AffPoint ltf(xmin, ymax, zmax);//Left Top Front
-	cryph::AffPoint rbf(xmax,ymin,zmax);//right bottom front
-	cryph::AffPoint rtf(xmax,ymax,zmax); //Right Top front
-	cryph::AffPoint rbb(xmax,ymin,zmin);// right back bottom
-	cryph::AffPoint rtb(xmax,ymax,zmin); //Right Top Back
-	cryph::AffPoint lbb(xmin,ymin,zmin);//left bottom back
-	cryph::AffPoint ltb(xmin,ymax,zmin); //Left Top Back
+	//Doesnt need kd because its a collection of blocks
+	// kd[0] = r;
+	// kd[1] = g;
+	// kd[2] = b;
 
-	//These Affpoints are especially for the shelf, or top part of the table
-
-	cryph::AffPoint shelflbf(xmin,(ymin+.8*(ymax-ymin)),zmax);//left Bottom Front
-	cryph::AffPoint shelfrbf(xmax, ymin + .8*(ymax-ymin),zmax);//right bottom front
-	cryph::AffPoint shelfrbb(xmin, ymin + .8*(ymax-ymin), zmin);//right bottom back
-	cryph::AffPoint shelflbb(xmin, ymin + .8*(ymax-ymin),zmin);//left bottom back
-
-	//These AffPoints are for the front Left Leg of the table
-	cryph::AffPoint flrbf(xmin+.1*(xmax-xmin),ymin,zmax);
-	cryph::AffPoint flrtf(xmin+.1*(xmax-xmin),ymin+.8*(ymax-ymin),zmax);
-	cryph::AffPoint flrbb(xmin+.1*(xmax-xmin),ymin,zmax-.1*(zmax-zmin));
-	cryph::AffPoint flrtb(xmin+.1*(xmax-xmin),ymin+.8*(ymax-ymin),zmax-.1*(zmax-zmin));
-	cryph::AffPoint fllbb(xmin,ymin,zmax-.1*(zmax-zmin));
-	cryph::AffPoint flltb(xmin,ymin+.8*(ymax-ymin),zmax-.1*(zmax-zmin));
-
-	top = new Block(sIF, shelflbf, ltf, shelfrbf, rtf, shelfrbb, rtb, shelflbb, ltb);
-	frontLeftLeg = new Block(sIF, lbf, shelflbf, flrbf,flrtf,flrbb,flrtb,fllbb,flltb);
-*/
 	double legwidth=.1;//a fraction representing the leg witdth as a portion of the tables width
 	double legheight=.8;//a fraction representing the leg height as a portion of the tables height
 	double deltax = xmax - xmin;
@@ -97,17 +70,17 @@ Table::Table(ShaderIF* sIF, float blx, float bly, float blz, float lx, float ly,
 	double localymin = ymin + (legheight)*ly;
 	double localylength = (1-legheight)*ly;
 
-	top = new Block(sIF,xmin,localymin,zmin,lx,localylength,lz);
+	top = new Block(sIF,xmin,localymin,zmin,lx,localylength,lz,r,g,b);
 	double localxlength = legwidth*lx;
 	localylength = legheight*ly;
 	double localzlength = legwidth*lz;
-	frontRightLeg = new Block(sIF,xmin,ymin,zmin,localxlength,localylength,localzlength);
+	frontRightLeg = new Block(sIF,xmin,ymin,zmin,localxlength,localylength,localzlength,r,g,b);
 	double localxmin = xmax-legwidth*lx;
 
-	frontLeftLeg = new Block(sIF,localxmin,ymin,zmin,localxlength,localylength,localzlength);
+	frontLeftLeg = new Block(sIF,localxmin,ymin,zmin,localxlength,localylength,localzlength,r,g,b);
 	double localzmin = zmax - legwidth*lz;
-	backRightLeg = new Block(sIF,xmin,ymin,localzmin,localxlength,localylength,localzlength);
-	backLeftLeg = new Block(sIF,localxmin,ymin,localzmin,localxlength,localylength,localzlength);
+	backRightLeg = new Block(sIF,xmin,ymin,localzmin,localxlength,localylength,localzlength,r,g,b);
+	backLeftLeg = new Block(sIF,localxmin,ymin,localzmin,localxlength,localylength,localzlength,r,g,b);
 	//top = new Block(sIF,xmin,ymin+legheight*(deltay),zmin,deltax,deltay,deltaz);
 //	frontLeftLeg = new Block(sIF, xmin,ymin,zmax-legwidth*(deltaz),xmin+legwidth*deltax,ymin+legheight*deltay,zmax);
 
