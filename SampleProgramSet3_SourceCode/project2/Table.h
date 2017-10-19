@@ -56,8 +56,8 @@ private:
 	Block* top;
 	Block* frontLeftLeg;
 	Block* frontRightLeg;
-	Block* BackLeftLeg;
-	Block* BackRightLeg;
+	Block* backLeftLeg;
+	Block* backRightLeg;
 
 	static GLuint indexList[3][4];
 };

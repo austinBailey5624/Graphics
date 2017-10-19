@@ -98,8 +98,16 @@ Table::Table(ShaderIF* sIF, float blx, float bly, float blz, float lx, float ly,
 	double localylength = (1-legheight)*ly;
 
 	top = new Block(sIF,xmin,localymin,zmin,lx,localylength,lz);
-//	double
-//	frontRightLeg = new Block(sIF,xmin,ymin,zmin,)
+	double localxlength = legwidth*lx;
+	localylength = legheight*ly;
+	double localzlength = legwidth*lz;
+	frontRightLeg = new Block(sIF,xmin,ymin,zmin,localxlength,localylength,localzlength);
+	double localxmin = xmax-legwidth*lx;
+
+	frontLeftLeg = new Block(sIF,localxmin,ymin,zmin,localxlength,localylength,localzlength);
+	double localzmin = zmax - legwidth*lz;
+	backRightLeg = new Block(sIF,xmin,ymin,localzmin,localxlength,localylength,localzlength);
+	backLeftLeg = new Block(sIF,localxmin,ymin,localzmin,localxlength,localylength,localzlength);
 	//top = new Block(sIF,xmin,ymin+legheight*(deltay),zmin,deltax,deltay,deltaz);
 //	frontLeftLeg = new Block(sIF, xmin,ymin,zmax-legwidth*(deltaz),xmin+legwidth*deltax,ymin+legheight*deltay,zmax);
 
@@ -109,7 +117,10 @@ Table::Table(ShaderIF* sIF, float blx, float bly, float blz, float lx, float ly,
 Table::~Table()
 {
 	delete top;
-	//delete frontLeftLeg;
+	delete frontRightLeg;
+	delete frontLeftLeg;
+	delete backRightLeg;
+	delete backLeftLeg;
 }
 
 void Table::defineTable()
@@ -136,5 +147,8 @@ bool Table::handleCommand(unsigned char anASCIIChar, double ldsX, double ldsY)
 void Table::render()
 {
 	top->render();
-	//frontLeftLeg->render();
+	frontRightLeg->render();
+	frontLeftLeg->render();
+	backRightLeg->render();
+	backLeftLeg->render();
 }
