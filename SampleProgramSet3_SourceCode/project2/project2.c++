@@ -56,8 +56,8 @@ int main(int argc, char* argv[])
 
 	ShaderIF* sIF = new ShaderIF("shaders/basic.vsh", "shaders/phong.fsh");
 
-//	c.addModel(new Block(sIF, 0.3, -0.4, 1.2, 0.3, 0.3, 0.4));
-	c.addModel(new Table(sIF, 0.3,-0.4,1.2,0.3,0.3,0.4));
+	c.addModel(new Block(sIF, 0.3, -0.4, 1.2, 0.3, 0.3, 0.4));
+//	c.addModel(new Table(sIF, 0.3,-0.4,1.2,0.3,0.3,0.4));
 
 	// create your scene, adding things to the Controller....
 
