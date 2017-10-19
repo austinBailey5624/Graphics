@@ -22,7 +22,7 @@ void set3DViewingInformation(double xyz[6])
 	// double xmid = 0.5 * (xyz[0] + xyz[1]);
 	// double ymid = 0.5 * (xyz[2] + xyz[3]);
 	// double zmid = 0.5 * (xyz[4] + xyz[5]);
-	cryph::AffVector direction(.8,.5,1);
+	cryph::AffVector direction(8,5.5,9);
 	direction.normalize();
 
 
@@ -30,7 +30,8 @@ void set3DViewingInformation(double xyz[6])
 
 
 	cryph::AffPoint eye = center + 2*delta*direction;
-	cryph::AffVector up = cryph::AffVector::zu;
+	//cryph::AffVector up = cryph::AffVector::zu;
+	cryph::AffVector up(0,1,0);
 	// Set values for eye-center-up to produce a reasonable off-axis
 	// view of your scene, then:
 
@@ -56,7 +57,8 @@ int main(int argc, char* argv[])
 
 	ShaderIF* sIF = new ShaderIF("shaders/basic.vsh", "shaders/phong.fsh");
 
-	c.addModel(new Block(sIF, 0.3, -0.4, 1.2, 0.3, 0.3, 0.4));
+//	c.addModel(new Block(sIF, 4, 0, 4, 4, 3, 2));
+	c.addModel(new Table(sIF, 4, 0, 4, 4, 3, 2));
 //	c.addModel(new Table(sIF, 0.3,-0.4,1.2,0.3,0.3,0.4));
 
 	// create your scene, adding things to the Controller....

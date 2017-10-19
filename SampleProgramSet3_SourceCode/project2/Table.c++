@@ -48,14 +48,14 @@ void TEMPLATE_Subclass::render()
 
 typedef float vec3[3];
 
-Table::Table(ShaderIF* sIF, float blx, float bly, float blz, float urx, float ury, float urz) : shaderIF(sIF)
+Table::Table(ShaderIF* sIF, float blx, float bly, float blz, float lx, float ly, float lz) : shaderIF(sIF)
 {
 	xmin = blx;
 	ymin = bly;
 	zmin = blz;
-	xmax = urx;
-	ymax = ury;
-	zmax = urz;
+	xmax = xmin + lx;
+	ymax = ymin + ly;
+	zmax = zmin + lz;
 	kd[0] = .3;
 	kd[1] = .28;
 	kd[2] = .26;
@@ -94,8 +94,14 @@ Table::Table(ShaderIF* sIF, float blx, float bly, float blz, float urx, float ur
 	double deltax = xmax - xmin;
 	double deltay = ymax - ymin;
 	double deltaz = zmax - zmin;
-	top = new Block(sIF,xmin,ymin+legheight*(deltay),zmin,deltax,deltay,deltaz);
-	frontLeftLeg = new Block(sIF, xmin,ymin,zmax-legwidth*(deltaz),xmin+legwidth*deltax,ymin+legheight*deltay,zmax);
+	double localymin = ymin + (legheight)*ly;
+	double localylength = (1-legheight)*ly;
+
+	top = new Block(sIF,xmin,localymin,zmin,lx,localylength,lz);
+//	double
+//	frontRightLeg = new Block(sIF,xmin,ymin,zmin,)
+	//top = new Block(sIF,xmin,ymin+legheight*(deltay),zmin,deltax,deltay,deltaz);
+//	frontLeftLeg = new Block(sIF, xmin,ymin,zmax-legwidth*(deltaz),xmin+legwidth*deltax,ymin+legheight*deltay,zmax);
 
 	//defineTable();
 }
@@ -103,7 +109,7 @@ Table::Table(ShaderIF* sIF, float blx, float bly, float blz, float urx, float ur
 Table::~Table()
 {
 	delete top;
-	delete frontLeftLeg;
+	//delete frontLeftLeg;
 }
 
 void Table::defineTable()
@@ -130,5 +136,5 @@ bool Table::handleCommand(unsigned char anASCIIChar, double ldsX, double ldsY)
 void Table::render()
 {
 	top->render();
-	frontLeftLeg->render();
+	//frontLeftLeg->render();
 }

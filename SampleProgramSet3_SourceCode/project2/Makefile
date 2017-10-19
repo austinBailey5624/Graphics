@@ -37,3 +37,6 @@ Block.o: Block.h Block.c++
 
 Table.o: Table.h Table.c++ Block.h Block.c++
 	$(CPP) $(C_FLAGS) Table.c++ Block.c++
+
+clean:
+	rm *.o project2
