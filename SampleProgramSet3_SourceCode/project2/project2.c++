@@ -6,6 +6,7 @@
 #include "Block.h"
 #include "Table.h"
 #include "RubiksBlock.h"
+#include "Cylinder.h"
 void set3DViewingInformation(double xyz[6])
 {
 	ModelView::setMCRegionOfInterest(xyz);
@@ -62,6 +63,9 @@ int main(int argc, char* argv[])
 //	c.addModel(new Block(sIF, 4, 0, 4, 4, 3, 2,.2,.2,.2));
 	c.addModel(new Table(sIF, 4, 0, 4, 4, 3, 2,.7,.3,.3));
 	c.addModel(new RubiksBlock(sIF,5.5,3.1,4.5,1));
+	cryph::AffPoint cylbottom(8,3.1,6);
+	cryph::AffPoint cyltop(8,4.1,6);
+	c.addModel(new Cylinder(sIF,0.5,cyltop,cylbottom,100,.2,.6,.2));
 
 	// create your scene, adding things to the Controller....
 

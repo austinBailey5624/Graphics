@@ -7,7 +7,7 @@ LOCAL_UTIL_LIBRARIES = ../lib/libcryph.so ../lib/libfont.so ../lib/libglsl.so ..
 GL_LIB_LOC = -L/usr/lib/nvidia-375
 GL_LIBRARIES = $(GL_LIB_LOC) -lglfw -lGLU -lGL
 
-OBJS = project2.o ModelView_Additions.o Block.o Table.o RubiksBlock.o
+OBJS = project2.o ModelView_Additions.o Block.o Table.o RubiksBlock.o Cylinder.o
 
 project2: $(OBJS) $(LOCAL_UTIL_LIBRARIES)
 	$(LINK) -o project2 $(OBJS) $(LOCAL_UTIL_LIBRARIES) $(GL_LIBRARIES)
@@ -40,6 +40,9 @@ Table.o: Table.h Table.c++ Block.h Block.c++
 
 RubiksBlock.o: RubiksBlock.h RubiksBlock.c++ Block.h Block.c++
 	$(CPP) $(C_FLAGS) RubiksBlock.c++ Block.c++
+
+Cylinder.o: Cylinder.h Cylinder.c++
+	$(CPP) $(C_FLAGS) Cylinder.c++
 
 clean:
 	rm *.o project2
