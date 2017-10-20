@@ -7,6 +7,7 @@
 #include "Table.h"
 #include "RubiksBlock.h"
 #include "Cylinder.h"
+#include "Chair.h"
 void set3DViewingInformation(double xyz[6])
 {
 	ModelView::setMCRegionOfInterest(xyz);
@@ -66,6 +67,11 @@ int main(int argc, char* argv[])
 	cryph::AffPoint cylbottom(8,3.1,6);
 	cryph::AffPoint cyltop(8,4.1,6);
 	c.addModel(new Cylinder(sIF,0.5,cyltop,cylbottom,100,.2,.6,.2));
+
+	c.addModel(new Chair(sIF,5,0,1,1.5,3.5,.5,.5,.5,1));
+	c.addModel(new Chair(sIF,5,0,7,1.5,3.5,.5,.5,.5,0));
+	c.addModel(new Chair(sIF,9,0,4,1.5,3.5,.5,.5,.5,2));
+	c.addModel(new Chair(sIF,1,0,4,1.5,3.5,.5,.5,.5,3));//this one is the problem
 
 	// create your scene, adding things to the Controller....
 

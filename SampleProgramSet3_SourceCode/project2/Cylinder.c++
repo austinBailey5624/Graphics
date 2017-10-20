@@ -147,7 +147,7 @@ void Cylinder::render()
 
 	glUniform3fv(shaderIF->ppuLoc("kd"), 1, kd);
 	glBindVertexArray(vao[0]);
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, 2*(numCircumferencePoints+1));
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 2*(numCircumferencePoints));
 
 	glUseProgram(pgm);
 }

@@ -5,16 +5,19 @@
 
 #include "ModelView.h"
 #include "ShaderIF.h"
-#include "Table.h"
 #include "Block.h"
+#include "Cylinder.h"
 #include <GL/gl.h>
 
 class Chair : public ModelView
 {
 public:
 	// As before: you will likely want to add parameters to the constructor
-	Chair(ShaderIF* sIF, float blx, float bly, float blz, float lx, float ly, float lz, float r, float g, float b);
-	virtual ~TEMPLATE_Subclass();
+	Chair(ShaderIF* sIF, float blx, float bly, float blz, float lxz, float ly, float r, float g, float b, int direction);
+	virtual ~Chair();
+	//the length of x is forced to be the same as the length of z
+
+
 
 	// xyzLimits: {mcXmin, mcXmax, mcYmin, mcYmax, mcZmin, mcZmax}
 	void getMCBoundingBox(double* xyzLimitsF) const;
@@ -30,7 +33,11 @@ private:
 	float zmax;
 
 	Block* seatBack;
-	Table* seatBase;
+	Block* seatBase;
+	Cylinder* frontRightLeg;
+	Cylinder* frontLeftLeg;
+	Cylinder* backRightLeg;
+	Cylinder* backLeftLeg;
 
 	static GLuint indexList[3][4];
 };
