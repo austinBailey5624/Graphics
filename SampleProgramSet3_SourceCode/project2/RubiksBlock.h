@@ -11,6 +11,7 @@ class RubiksBlock : public ModelView
 public:
 	// As before: you will likely want to add parameters to the constructor
 	RubiksBlock(ShaderIF* sIF, float cx, float cy, float cz, float length);
+	RubiksBlock(ShaderIF* sIF, float cx, float cy, float cz, float length, int white, int red, int blue);//int white,red,and blue determine the directions of red white and blue
 	virtual ~RubiksBlock();
 
 	// xyzLimits: {mcXmin, mcXmax, mcYmin, mcYmax, mcZmin, mcZmax}
