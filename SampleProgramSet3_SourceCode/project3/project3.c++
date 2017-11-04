@@ -1,5 +1,3 @@
-// project2.c++: Starter for EECS 672 Project 2
-// project2.c++: Starter for EECS 672 Project 2
 
 #include "GLFWController.h"
 //#include "TEMPLATE_Subclass.h"
@@ -8,7 +6,7 @@
 #include "Table.h"
 //#include "RubiksBlock.h"
 //#include "Cylinder.h"
-//#include "Chair.h"
+#include "Chair.h"
 //#include "RubiksCube.h"
 void set3DViewingInformation(double xyz[6])
 {
@@ -35,7 +33,7 @@ void set3DViewingInformation(double xyz[6])
 	cryph::AffPoint center(6,1.5,5);
 
 	//cryph::AffPoint eye(0.5 * (xyz[0] + xyz[1]),0.5 * (xyz[2] + xyz[3]),0.5 * (xyz[4] + xyz[5]));
-	cryph::AffPoint eye = center + 1.65*delta*direction;
+	cryph::AffPoint eye = center + 2*delta*direction;
 	//cryph::AffVector up = cryph::AffVector::zu;
 	cryph::AffVector up(0,1,0);
 	// Set values for eye-center-up to produce a reasonable off-axis
@@ -71,14 +69,14 @@ int main(int argc, char* argv[])
 //	c.addModel(new Table(sIF,5.5,3,4.5,1,2,1,.75164,.60648,.22648));
 //	c.addModel(new Table(sIF,6.75,3,4.5,1,1.5,1,.50754,.50754,.50754));
 //	c.addModel(new RubiksBlock(sIF,5.5,3.1,4.5,1));
-//	cryph::AffPoint cylbottom(8,3.1,6);
-//	cryph::AffPoint cyltop(8,4.1,6);
-//	c.addModel(new Cylinder(sIF,0.5,cyltop,cylbottom,100,.2,.6,.2));
+//	cryph::AffPoint cylbottom(6,3.1,5);
+//	cryph::AffPoint cyltop(6,4.1,5);
+//	c.addModel(new Cylinder(sIF,Chrome,0.5,cyltop,cylbottom,100));
 
-//	c.addModel(new Chair(sIF,5,0,1,1.5,3.5,.4,.4,.4,1));
-//	c.addModel(new Chair(sIF,5,0,7,1.5,3.5,.4,.4,.4,0));
-//	c.addModel(new Chair(sIF,9,0,4,1.5,3.5,.4,.4,.4,2));
-//	c.addModel(new Chair(sIF,1,0,4,1.5,3.5,.4,.4,.4,3));//this one is the problem
+	c.addModel(new Chair(sIF,Chrome,5,0,1,1.5,3.5,1));
+	c.addModel(new Chair(sIF,Chrome,5,0,7,1.5,3.5,0));
+	c.addModel(new Chair(sIF,Chrome,9,0,4,1.5,3.5,2));
+	c.addModel(new Chair(sIF,Chrome,1,0,4,1.5,3.5,3)); //this one is the problem
 	//c.addModel(new RubiksCube(sIF,5.5,5,4.5,1,0));//gold
 //	c.addModel(new RubiksCube(sIF,5.6666,5,4.6666,.6666,0));
 //	c.addModel(new RubiksCube(sIF,6.75,4.5,4.5,1,1));//silver

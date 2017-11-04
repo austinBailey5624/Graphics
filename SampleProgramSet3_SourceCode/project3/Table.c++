@@ -13,10 +13,6 @@ Table::Table(ShaderIF* sIF, PhongMaterial& base, float blx, float bly, float blz
 	ymax = ymin + ly;
 	zmax = zmin + lz;
 
-	//Doesnt need kd because its a collection of blocks
-	// kd[0] = r;
-	// kd[1] = g;
-	// kd[2] = b;
 
 	double legwidth=.1;//a fraction representing the leg witdth as a portion of the tables width
 	double legheight=.8;//a fraction representing the leg height as a portion of the tables height
@@ -37,10 +33,6 @@ Table::Table(ShaderIF* sIF, PhongMaterial& base, float blx, float bly, float blz
 	double localzmin = zmax - legwidth*lz;
 	backRightLeg = new Block(sIF,base,xmin,ymin,localzmin,localxlength,localylength,localzlength);
 	backLeftLeg = new Block(sIF,base,localxmin,ymin,localzmin,localxlength,localylength,localzlength);
-	//top = new Block(sIF,xmin,ymin+legheight*(deltay),zmin,deltax,deltay,deltaz);
-//	frontLeftLeg = new Block(sIF, xmin,ymin,zmax-legwidth*(deltaz),xmin+legwidth*deltax,ymin+legheight*deltay,zmax);
-
-	//defineTable();
 }
 
 Table::~Table()
