@@ -4,7 +4,7 @@
 #include <math.h>
 #include "Block.h"
 #include "Table.h"
-//#include "RubiksBlock.h"
+#include "RubiksBlock.h"
 //#include "Cylinder.h"
 #include "Chair.h"
 //#include "RubiksCube.h"
@@ -61,13 +61,20 @@ int main(int argc, char* argv[])
 
 	ShaderIF* sIF = new ShaderIF("shaders/basic.vsh", "shaders/phong.fsh");
 	PhongMaterial Chrome(0.25,0.25,0.25,0.4,0.4,0.4,0.774597,0.774597,0.774597,76.8,1);
+	PhongMaterial Bronze(0.2125,0.1275,0.054,0.714,0.4284,0.18144,0.393548,0.271906,0.166721,25.6,1);
+	PhongMaterial Silver(0.19225,0.19225,0.19225,0.50754,0.50754,0.50754,0.508273,0.508273,0.508273,51.2,1);
+	PhongMaterial Gold(0.24725,0.1995,0.0745,0.75164,0.60648,0.22648,0.628281,0.555802,0.366065,51.2,1);
 //	c.addModel(new Block(sIF,Chrome,4,0,4,4,3,2));
 
 //	c.addModel(new Block(sIF, 4, 0, 4, 4, 3, 2,.2,.2,.2));
 	c.addModel(new Table(sIF,Chrome, 4, 0, 4, 4, 3, 2));
-//	c.addModel(new Table(sIF, 4.25,3,4.5,1,1,1,.714,.4284,.18144));
-//	c.addModel(new Table(sIF,5.5,3,4.5,1,2,1,.75164,.60648,.22648));
-//	c.addModel(new Table(sIF,6.75,3,4.5,1,1.5,1,.50754,.50754,.50754));
+	c.addModel(new Table(sIF,Bronze, 4.25,3,4.5,1,1,1));
+
+//	c.addModel(new Table(sIF, 4.25,3,4.5,1,1,1,.714,.4284,.18144));//bronze
+	c.addModel(new Table(sIF,Gold,5.5,3,4.5,1,2,1));
+//	c.addModel(new Table(sIF,5.5,3,4.5,1,2,1,.75164,.60648,.22648));//gold
+	c.addModel(new Table(sIF,Silver,6.75,3,4.5,1,1.5,1));
+//	c.addModel(new Table(sIF,6.75,3,4.5,1,1.5,1,.50754,.50754,.50754));//silver
 //	c.addModel(new RubiksBlock(sIF,5.5,3.1,4.5,1));
 //	cryph::AffPoint cylbottom(6,3.1,5);
 //	cryph::AffPoint cyltop(6,4.1,5);
@@ -77,6 +84,7 @@ int main(int argc, char* argv[])
 	c.addModel(new Chair(sIF,Chrome,5,0,7,1.5,3.5,0));
 	c.addModel(new Chair(sIF,Chrome,9,0,4,1.5,3.5,2));
 	c.addModel(new Chair(sIF,Chrome,1,0,4,1.5,3.5,3)); //this one is the problem
+	c.addModel(new RubiksBlock(sIF,Chrome,5.5,5,4.5,1,1,1));
 	//c.addModel(new RubiksCube(sIF,5.5,5,4.5,1,0));//gold
 //	c.addModel(new RubiksCube(sIF,5.6666,5,4.6666,.6666,0));
 //	c.addModel(new RubiksCube(sIF,6.75,4.5,4.5,1,1));//silver
