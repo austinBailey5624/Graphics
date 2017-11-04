@@ -5,7 +5,7 @@
 //#include "TEMPLATE_Subclass.h"
 #include <math.h>
 #include "Block.h"
-//#include "Table.h"
+#include "Table.h"
 //#include "RubiksBlock.h"
 //#include "Cylinder.h"
 //#include "Chair.h"
@@ -63,10 +63,10 @@ int main(int argc, char* argv[])
 
 	ShaderIF* sIF = new ShaderIF("shaders/basic.vsh", "shaders/phong.fsh");
 	PhongMaterial Chrome(0.25,0.25,0.25,0.4,0.4,0.4,0.774597,0.774597,0.774597,76.8,1);
-	c.addModel(new Block(sIF,Chrome,4,0,4,4,3,2));
+//	c.addModel(new Block(sIF,Chrome,4,0,4,4,3,2));
 
 //	c.addModel(new Block(sIF, 4, 0, 4, 4, 3, 2,.2,.2,.2));
-//	c.addModel(new Table(sIF, 4, 0, 4, 4, 3, 2,.7,.3,.3));
+	c.addModel(new Table(sIF,Chrome, 4, 0, 4, 4, 3, 2));
 //	c.addModel(new Table(sIF, 4.25,3,4.5,1,1,1,.714,.4284,.18144));
 //	c.addModel(new Table(sIF,5.5,3,4.5,1,2,1,.75164,.60648,.22648));
 //	c.addModel(new Table(sIF,6.75,3,4.5,1,1.5,1,.50754,.50754,.50754));

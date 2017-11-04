@@ -7,7 +7,7 @@ LOCAL_UTIL_LIBRARIES = ../lib/libcryph.so ../lib/libfont.so ../lib/libglsl.so ..
 GL_LIB_LOC = -L/usr/lib/nvidia-375
 GL_LIBRARIES = $(GL_LIB_LOC) -lglfw -lGLU -lGL
 
-OBJS = project3.o Block.o ModelView_Additions.o PhongMaterial.o SceneElement.o
+OBJS = project3.o Block.o Table.o ModelView_Additions.o PhongMaterial.o SceneElement.o
 
 project3: $(OBJS) $(LOCAL_UTIL_LIBRARIES)
 	$(LINK) -o project3 $(OBJS) $(LOCAL_UTIL_LIBRARIES) $(GL_LIBRARIES)
@@ -37,5 +37,7 @@ SceneElement.o: SceneElement.h SceneElement.c++
 	$(CPP) $(C_FLAGS) SceneElement.c++
 Block.o: Block.h Block.c++
 	$(CPP) $(C_FLAGS) Block.c++
+Table.o: Table.h Table.c++ Block.h Block.c++
+	$(CPP) $(C_FLAGS) Table.c++ Block.c++
 
 clean: rm *.o project3

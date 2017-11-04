@@ -1,26 +1,36 @@
-// TEMPLATE_Subclass.h
+#ifndef TABLE_H
+#define TABLE_H
 
-#ifndef TEMPLATE_SUBCLASS_H
-#define TEMPLATE_SUBCLASS_H
-
-#include "SceneElement.h"
+#include "ModelView.h"
 #include "ShaderIF.h"
+#include "Block.h"
+#include <GL/gl.h>
 
-class TEMPLATE_Subclass : public SceneElement
+class Table : public SceneElement
 {
 public:
-	TEMPLATE_Subclass(ShaderIF* sIF, PhongMaterial& matl);
-	virtual ~TEMPLATE_Subclass();
-
-	// xyzLimits: {mcXmin, mcXmax, mcYmin, mcYmax, mcZmin, mcZmax}
+	Table(ShaderIF* sIF, PhongMaterial& base, float blx, float bly, float blz, float lx, float ly, float lz);
+	virtual ~Table();
+	bool handleCommand(unsigned char anASCIIChar, double ldsX, double ldsY);
 	void getMCBoundingBox(double* xyzLimitsF) const;
 	void render();
 private:
-	// IMPORTANT NOTE:
-	// The ShaderIF and kd (and other) material properties will be
-	// stored with the SceneElement piece of this object instance.
-	// You only need add instance variables here that are unique
-	// to the new subclass you are creating.
-};
+	ShaderIF* shaderIF;
+	GLuint vao[5];
+	GLuint vbo[5];
+	GLuint ebo[3];
+	float xmin;
+	float xmax;
+	float ymin;
+	float ymax;
+	float zmin;
+	float zmax;
+	Block* top;
+	Block* frontLeftLeg;
+	Block* frontRightLeg;
+	Block* backLeftLeg;
+	Block* backRightLeg;
 
+	static GLuint indexList[3][4];
+};
 #endif
