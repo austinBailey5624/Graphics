@@ -1,13 +1,12 @@
 
 #include "GLFWController.h"
-//#include "TEMPLATE_Subclass.h"
 #include <math.h>
 #include "Block.h"
 #include "Table.h"
 #include "RubiksBlock.h"
 //#include "Cylinder.h"
 #include "Chair.h"
-//#include "RubiksCube.h"
+#include "RubiksCube.h"
 void set3DViewingInformation(double xyz[6])
 {
 	ModelView::setMCRegionOfInterest(xyz);
@@ -84,8 +83,8 @@ int main(int argc, char* argv[])
 	c.addModel(new Chair(sIF,Chrome,5,0,7,1.5,3.5,0));
 	c.addModel(new Chair(sIF,Chrome,9,0,4,1.5,3.5,2));
 	c.addModel(new Chair(sIF,Chrome,1,0,4,1.5,3.5,3)); //this one is the problem
-	c.addModel(new RubiksBlock(sIF,Chrome,5.5,5,4.5,1,1,1));
-	//c.addModel(new RubiksCube(sIF,5.5,5,4.5,1,0));//gold
+	//c.addModel(new RubiksBlock(sIF,Chrome,5.5,5,4.5,1,1,1));
+	c.addModel(new RubiksCube(sIF,Gold,5.5,5,4.5,1,0));//gold
 //	c.addModel(new RubiksCube(sIF,5.6666,5,4.6666,.6666,0));
 //	c.addModel(new RubiksCube(sIF,6.75,4.5,4.5,1,1));//silver
 //	c.addModel(new RubiksCube(sIF,6.9166,4.5,4.6666,.6666,1));

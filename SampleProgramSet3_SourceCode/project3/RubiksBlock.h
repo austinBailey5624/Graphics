@@ -10,7 +10,7 @@
 class RubiksBlock : public SceneElement
 {
 public:
-	RubiksBlock(ShaderIF* sIF, PhongMaterial& base, float cx, float cy, float cz, float length, int white, int red);
+	RubiksBlock(ShaderIF* sIF, PhongMaterial& base, float cx, float cy, float cz, float length, int whitedir, int reddir);
 	//int white and red determine the direction of the cube
 
 	virtual ~RubiksBlock();
@@ -33,13 +33,14 @@ private:
 	Block* front;
 	Block* back;
 
+/*
 	static PhongMaterial white;
 	static PhongMaterial yellow;
 	static PhongMaterial blue;
 	static PhongMaterial green;
 	static PhongMaterial red;
 	static PhongMaterial orange;
-
+*/
 };
 
 #endif
