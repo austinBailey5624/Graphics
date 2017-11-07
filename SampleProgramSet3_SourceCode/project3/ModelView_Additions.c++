@@ -9,7 +9,14 @@ void ModelView::addToGlobalPan(double dxInLDS, double dyInLDS, double dzInLDS)
 	//std::cout << "In project 3, you will implement ModelView::addToPan in ModelView_Additions.c++\n";
 	// TODO: 1. Use last_ecXmin, et al. with dxInLDS, et al. to translate the LDS
 	//          pan vector to an EC pan vector.
+	double dxInEC = (dxInLDS/2)*(last_ecXmax-last_ecXmin);
+	double dyInEC = (dyInLDS/2)*(last_ecYmax-last_ecYmin);
+
+	cryph::AffVector panVec(dxInEC,dyInEC,dzInLDS);
+	cryph::Matrix4x4 translationMatrix = cryph::Matrix4x4::translation(panVec);
+
 	//       2. UPDATE dynamic_view
+	dynamic_view = translationMatrix * dynamic_view;
 	// TODO: 3. The updated dynamic_view will be used in ModelView::getMatrices
 }
 
@@ -20,6 +27,13 @@ void ModelView::addToGlobalRotationDegrees(double rx, double ry, double rz)
 	//std::cout << "In project 3, you will implement ModelView::addToGlobalRotationDegrees in ModelView_Additions.c++\n";
 	// TODO: 1. UPDATE dynamic_view
 	// TODO: 2. The updated dynamic_view will be used in ModelView::getMatrices
+	cryph::Matrix4x4 xRot = cryph::Matrix4x4::xRotationDegrees(rx);
+	cryph::Matrix4x4 yRot = cryph::Matrix4x4::yRotationDegrees(ry);
+	cryph::Matrix4x4 zRot = cryph::Matrix4x4::zRotationDegrees(rz);
+	//note, z will never be called since lifting the mouse wont send a signal
+
+	dynamic_view = xRot*yRot*zRot*dynamic_view;
+
 }
 
 void ModelView::getMatrices(cryph::Matrix4x4& mc_ec, cryph::Matrix4x4& ec_lds)
@@ -38,15 +52,19 @@ void ModelView::getMatrices(cryph::Matrix4x4& mc_ec, cryph::Matrix4x4& ec_lds)
 			ModelView::center, ModelView::up);
 
 	//    For project 2:
-	mc_ec = M_ECu;
+	//mc_ec = M_ECu;//old proj2 way
 
 	//    For project 3: Either:
 	//        mc_ec = dynamic_view * M_ECu (if rotations are to be about the eye)
 	//    or:
 	//        mc_ec = postTrans * dynamic_view * preTrans * M_ECu (if
-	//                         rotations are to be about the center of attention)
+	//                         rotations are to be about the center of attention)--this one
 	//    NOTE: If using preTrans/postTrans, be sure you build them CORRECTLY here!!!
-
+	cryph::AffVector distEyeCenterVec(0,0,ModelView::distEyeCenter);
+	cryph::Matrix4x4 moveToCenter = cryph::Matrix4x4::translation(distEyeCenterVec);
+	cryph::Matrix4x4 moveBack = cryph::Matrix4x4::translation(-distEyeCenterVec);
+	//mc_ec = moveToCenter*dynamic_view*moveBack*M_ECu;
+	mc_ec = moveBack*dynamic_view*moveToCenter*M_ECu;
 	// 2. Create the ec_lds matrix:
 	//    Use the mcRegionOfInterest. (As with eye, center, up, the mcRegionOfInterest
 	//    is initialized in main and is subject to modification at any time while
@@ -82,8 +100,10 @@ void ModelView::getMatrices(cryph::Matrix4x4& mc_ec, cryph::Matrix4x4& ec_lds)
 	//    BE SURE YOU UNDERSTAND WHY THE FOLLOWING INITIALIZATIONS WORK. REVIEW YOUR NOTES.
 	//    YOU CAN BE PRETTY CONFIDENT YOU WILL BE ASKED A QUESTION AT LEAST RELATED TO THIS
 	//    ON AN EXAM!
-	last_ecXmin = -circumscribingSphereRadius; last_ecXmax = circumscribingSphereRadius;
-	last_ecYmin = -circumscribingSphereRadius; last_ecYmax = circumscribingSphereRadius;
+	last_ecXmin = -circumscribingSphereRadius*dynamic_zoomScale;
+	last_ecXmax = circumscribingSphereRadius*dynamic_zoomScale;
+	last_ecYmin = -circumscribingSphereRadius*dynamic_zoomScale;
+	last_ecYmax = circumscribingSphereRadius*dynamic_zoomScale;
 	// TODO:
 	//    2.d. Use ModelView::matchAspectRatio.
 
@@ -108,6 +128,7 @@ void ModelView::getMatrices(cryph::Matrix4x4& mc_ec, cryph::Matrix4x4& ec_lds)
 	// array which is assumed to be of length 16. It then returns the array pointer
 	// so it can be used as indicated in the two calls. Since the array is immediately
 	// copied by glUniformMatrix to the GPU, "mat" can be reused as indicated.)
+
 }
 
 void ModelView::scaleGlobalZoom(double multiplier)

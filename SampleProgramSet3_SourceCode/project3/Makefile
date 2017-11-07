@@ -46,4 +46,6 @@ RubiksBlock.o: RubiksBlock.h RubiksBlock.c++ Block.h Block.c++
 RubiksCube.o: RubiksCube.h RubiksCube.c++ RubiksBlock.h RubiksBlock.c++
 	$(CPP) $(C_FLAGS) RubiksCube.c++ RubiksBlock.c++
 
-clean: rm *.o project3
+clean:
+		rm *.o project3
+		echo clean done

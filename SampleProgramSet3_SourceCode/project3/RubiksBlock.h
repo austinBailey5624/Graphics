@@ -17,7 +17,14 @@ public:
 
 	void getMCBoundingBox(double* xyzLimitsF) const;
 	void render();
+	int getWhitedir();
+	int getReddir();
+	void rotate(int whitedir,int reddir);
+
 private:
+//	PhongMaterial* rotate(int dir, PhongMaterial* old);
+	int m_whitedir;
+	int m_reddir;
 	ShaderIF* shaderIF;
 	float xmin;
 	float xmax;
@@ -33,14 +40,6 @@ private:
 	Block* front;
 	Block* back;
 
-/*
-	static PhongMaterial white;
-	static PhongMaterial yellow;
-	static PhongMaterial blue;
-	static PhongMaterial green;
-	static PhongMaterial red;
-	static PhongMaterial orange;
-*/
 };
 
 #endif

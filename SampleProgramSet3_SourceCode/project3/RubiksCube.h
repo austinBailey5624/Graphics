@@ -12,14 +12,17 @@ class RubiksCube : public SceneElement
 {
 public:
 	// As before: you will likely want to add parameters to the constructor
-	RubiksCube(ShaderIF* sIF,PhongMaterial& matl, float xmin,float ymin,float zmin, float l, int which);
+	RubiksCube(ShaderIF* sIF,PhongMaterial& matl, float xmin,float ymin,float zmin, float l, int which, bool modifiable);
 	virtual ~RubiksCube();
 
 	// xyzLimits: {mcXmin, mcXmax, mcYmin, mcYmax, mcZmin, mcZmax}
 	void getMCBoundingBox(double* xyzLimitsF) const;
+	bool handleCommand(unsigned char anASCIIChar, double ldsX, double ldsY);
 	void render();
 private:
 	RubiksBlock* blocks[3][3][3];
+	void rotate(int direction);
+	int dirAfterRotate(int direction, int olddir);
 	ShaderIF* shaderIF;
 	float xmin;
 	float xmax;
@@ -27,7 +30,7 @@ private:
 	float ymax;
 	float zmin;
 	float zmax;
-
+	float length;
 };
 
 #endif

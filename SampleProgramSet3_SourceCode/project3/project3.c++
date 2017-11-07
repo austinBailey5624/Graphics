@@ -24,7 +24,7 @@ void set3DViewingInformation(double xyz[6])
 	// double xmid = 0.5 * (xyz[0] + xyz[1]);
 	// double ymid = 0.5 * (xyz[2] + xyz[3]);
 	// double zmid = 0.5 * (xyz[4] + xyz[5]);
-	cryph::AffVector direction(1,1.5,1.25);
+	cryph::AffVector direction(-1,1.5,-1.25);
 	direction.normalize();
 
 
@@ -84,7 +84,7 @@ int main(int argc, char* argv[])
 	c.addModel(new Chair(sIF,Chrome,9,0,4,1.5,3.5,2));
 	c.addModel(new Chair(sIF,Chrome,1,0,4,1.5,3.5,3)); //this one is the problem
 	//c.addModel(new RubiksBlock(sIF,Chrome,5.5,5,4.5,1,1,1));
-	c.addModel(new RubiksCube(sIF,Gold,5.5,5,4.5,1,0));//gold
+	c.addModel(new RubiksCube(sIF,Gold,5.5,5,4.5,1,0,true));//gold
 //	c.addModel(new RubiksCube(sIF,5.6666,5,4.6666,.6666,0));
 //	c.addModel(new RubiksCube(sIF,6.75,4.5,4.5,1,1));//silver
 //	c.addModel(new RubiksCube(sIF,6.9166,4.5,4.6666,.6666,1));
