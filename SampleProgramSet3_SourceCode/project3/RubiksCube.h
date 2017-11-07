@@ -31,6 +31,7 @@ private:
 	float zmin;
 	float zmax;
 	float length;
+	bool m_modifiable;
 };
 
 #endif

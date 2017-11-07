@@ -106,6 +106,8 @@ void ModelView::getMatrices(cryph::Matrix4x4& mc_ec, cryph::Matrix4x4& ec_lds)
 	last_ecYmax = circumscribingSphereRadius*dynamic_zoomScale;
 	// TODO:
 	//    2.d. Use ModelView::matchAspectRatio.
+	double viewPortAspectRatio = Controller::getCurrentController()->getViewportAspectRatio();
+	ModelView::matchAspectRatio(last_ecXmin,last_ecXmax,last_ecYmin,last_ecYmax,viewPortAspectRatio);
 
 	if (ModelView::projType == ORTHOGONAL)
 		ec_lds = cryph::Matrix4x4::orthogonal(last_ecXmin, last_ecXmax, last_ecYmin, last_ecYmax,
