@@ -26,6 +26,7 @@ private:
 	float ymax;
 	float zmin;
 	float zmax;
+	//bool willRender;
 
 	Block* seatBack;
 	Block* seatBase;

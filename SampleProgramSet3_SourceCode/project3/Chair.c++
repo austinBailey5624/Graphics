@@ -9,6 +9,7 @@ Chair::Chair(ShaderIF* sIF, PhongMaterial& base, float blx, float bly, float blz
 	//1: seat back is on zmin
 	//2: seat back is on xmax
 	//3: seat back is on xmin
+//	willRender=true;
 
 	xmin = blx;
 	ymin = bly;
@@ -64,6 +65,10 @@ Chair::~Chair()
 
 bool Chair::handleCommand(unsigned char anASCIIChar, double ldsX, double ldsY)
 {
+	if(anASCIIChar=='q')
+	{
+	//	willRender=!willRender;
+	}
 	return this->ModelView::handleCommand(anASCIIChar, ldsX, ldsY);
 }
 
@@ -80,10 +85,13 @@ void Chair::getMCBoundingBox(double* xyzLimits) const
 
 void Chair::render()
 {
-	seatBase->render();
-	frontRightLeg->render();
-	frontLeftLeg->render();
-	backRightLeg->render();
-	backLeftLeg->render();
-	seatBack->render();
+//	if(willRender)
+//	{
+		seatBase->render();
+		frontRightLeg->render();
+		frontLeftLeg->render();
+		backRightLeg->render();
+		backLeftLeg->render();
+		seatBack->render();
+//	}
 }

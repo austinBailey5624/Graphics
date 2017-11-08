@@ -7,6 +7,10 @@
 #include "ShaderIF.h"
 #include "RubiksBlock.h"
 #include <GL/gl.h>
+//following three are for shuffle
+#include <cstdio> /** NULL */
+#include <cstdlib> /** srand(), rand() */
+#include <ctime> /** time() */
 
 class RubiksCube : public SceneElement
 {
@@ -22,6 +26,7 @@ public:
 private:
 	RubiksBlock* blocks[3][3][3];
 	void rotate(int direction);
+	void solve();
 	int dirAfterRotate(int direction, int olddir);
 	ShaderIF* shaderIF;
 	float xmin;
