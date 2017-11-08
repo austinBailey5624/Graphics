@@ -17,12 +17,13 @@ RubiksBlock::RubiksBlock(ShaderIF* sIF, PhongMaterial &base, float cx, float cy,
 	zmax = zmin + length;
 	double offset = .05;//a fraction representing how much of the block gets cut off from the sides
 
-	PhongMaterial white(1,1,1,1,1,1,1,1,1,15,1);
-	PhongMaterial yellow(1,1,0,1,1,0,1,1,0,15,1);
-	PhongMaterial blue(0,0,1,0,0,1,0,0,1,15,1);
-	PhongMaterial green(0,1,0,0,1,0,0,1,0,15,1);
-	PhongMaterial red(1,0,0,1,0,0,1,0,0,15,1);
-	PhongMaterial orange(1,.5,0,1,.5,0,1,.5,0,15,1);
+	float b = .25;//brightness
+	PhongMaterial white(b,b,b,b,b,b,b,b,b,15,1);
+	PhongMaterial yellow(b,b,0,b,b,0,b,b,0,15,1);
+	PhongMaterial blue(0,0,b,0,0,b,0,0,b,15,1);
+	PhongMaterial green(0,b,0,0,b,0,0,b,0,15,1);
+	PhongMaterial red(b,0,0,b,0,0,b,0,0,15,1);
+	PhongMaterial orange(b,b*.5,0,b,b*.5,0,b,b*.5,0,15,1);
 	PhongMaterial error(.5,.5,.5,.5,.5,.5,.5,.5,.5,15,1);
 
 

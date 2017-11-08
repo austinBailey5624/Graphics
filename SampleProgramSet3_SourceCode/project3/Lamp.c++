@@ -4,6 +4,7 @@
 
 Lamp::Lamp(ShaderIF* sIF, PhongMaterial& matl, float blx, float bly, float blz, float lxz, float ly) : SceneElement(sIF, matl)
 {
+	PhongMaterial White(1,1,1,1,1,1,1,1,1,15,1);
 	xmin = blx;
 	ymin = bly;
 	zmin = blz;
@@ -16,7 +17,7 @@ Lamp::Lamp(ShaderIF* sIF, PhongMaterial& matl, float blx, float bly, float blz, 
 	double baseHeight = .1;
 	base = new Block(sIF,matl,blx,bly,blz,lxz,ly*baseHeight,lxz);
 	stand = new Block(sIF,matl,xmin+.4*lxz,ymin+ly*baseHeight,zmin+.4*lxz,lxz*standWidth,standHeight*ly,lxz*standWidth);
-	shade = new Block(sIF,matl,xmin,ymin+.6*ly,zmin,lxz,.4*ly,lxz);
+	shade = new Block(sIF,White,xmin,ymin+.6*ly,zmin,lxz,.4*ly,lxz);
 
 }
 

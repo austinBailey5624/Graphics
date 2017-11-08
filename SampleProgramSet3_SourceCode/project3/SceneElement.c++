@@ -5,14 +5,21 @@
 
 float SceneElement::lightPos[4*MAX_NUM_LIGHTS] =
 	{
+/*
 		0.25, 0.5, 1.0, 0.0,
 		0.0, 0.0, 0.0, 1.0,
 		-0.25, 0.5, 1.0, 0.0
+*/
+
+		0.5,3.0,0.5,1.0,//1 for positional-left lamp
+		6.5,3.0,0.5,1.0,//right Lamp
+		1.0,1.0,1.0,0.0,//0 for directional-sunlight
+
 	};
 
 // Are coordinates in "lightPos" stored in MC or EC?
 bool SceneElement::posInModelCoordinates[MAX_NUM_LIGHTS] =
-	{ false, false, false };
+	{ true, true, false };
 // The following is the buffer actually sent to GLSL. It will contain a copy of
 // the (x,y,z,w) for light sources defined in EC; it will contain the coordinates
 // after transformation to EC if the position was originally specified in MC.
@@ -20,9 +27,15 @@ float posToGLSL[4*MAX_NUM_LIGHTS];
 
 float SceneElement::lightStrength[3*MAX_NUM_LIGHTS] =
 	{
+		/*
 		0.8, 0.8, 0.8,
 		0.5, 0.5, 0.5,
 		0.6, 0.6, 0.6
+		*/
+		.5,0.4,0.4,//pinkish
+		0.4,0.4,.5,//really light blue
+	//	.5,0.35,0.1,//orangy
+		1.0,1.0,1.0,
 	};
 
 float SceneElement::globalAmbient[] = { 0.2, 0.2, 0.2 };
@@ -39,13 +52,45 @@ SceneElement::~SceneElement()
 
 void SceneElement::establishLightingEnvironment()
 {
-	// This should set:
-	// "actualNumLights", "ecLightPosition", "lightStrength", "globalAmbient"
+	int totalLights = 3;
+	float ecLightPosition[totalLights*4];
+	cryph::Matrix4x4 mcEc, ecLds;
+	getMatrices(mcEc,ecLds);
+
+	for(int i=0; i<totalLights;i++)
+	{
+		if(posInModelCoordinates[i] == true)//we're in MC
+		{//need to do fancy transition
+			cryph::AffPoint point(lightPos[4*i], lightPos[4*i+1], lightPos[4*i+2]);
+			point=mcEc*point;//converts to ec
+			ecLightPosition[4*i]=point.x;
+			ecLightPosition[4*i+1] = point.y;
+			ecLightPosition[4*i+2] = point.z;
+			ecLightPosition[4*i+3] =lightPos[4*i+3];
+		}
+		else//We're in EC - transition is simple
+		{
+			ecLightPosition[4*i] = lightPos[4*i];
+			ecLightPosition[4*i+1] = lightPos[4*i+1];
+			ecLightPosition[4*i+2] = lightPos[4*i+2];
+			ecLightPosition[4*i+3] = lightPos[4*i+3];
+		}
+	}
+
+	glUniform3fv(shaderIF->ppuLoc("globalAmbient"), 1, globalAmbient);
+	glUniform4fv(shaderIF->ppuLoc("lightPos"), totalLights, ecLightPosition);
+	glUniform1i (shaderIF->ppuLoc("totalLights"), totalLights);
+	glUniform3fv(shaderIF->ppuLoc("brightness"), totalLights, lightStrength);
 }
 
 void SceneElement::establishMaterial()
 {
-	glUniform3fv(shaderIF->ppuLoc("kd"), 1, matl.kd);
+	glUniform3fv(shaderIF->ppuLoc("ka"), 1, matl.ka);//ambient
+	glUniform3fv(shaderIF->ppuLoc("kd"), 1, matl.kd);//diffuse
+	glUniform3fv(shaderIF->ppuLoc("ks"), 1, matl.ks);//specular
+	//renamed opacity for clarity-alpha could mean anything
+	glUniform1f(shaderIF->ppuLoc("opacity"), matl.alpha);
+	glUniform1f(shaderIF->ppuLoc("shininess"), matl.shininess);
 }
 
 void SceneElement::establishTexture()
@@ -68,6 +113,19 @@ void SceneElement::establishView()
 	float m[16];
 	glUniformMatrix4fv(shaderIF->ppuLoc("mc_ec"), 1, false, mc_ec.extractColMajor(m));
 	glUniformMatrix4fv(shaderIF->ppuLoc("ec_lds"), 1, false, ec_lds.extractColMajor(m));
+
+	if(ModelView::projType == PERSPECTIVE)
+	{
+		glUniform1i(shaderIF->ppuLoc("projEnum"),1);
+	}
+	else if(ModelView::projType==ORTHOGONAL)
+	{
+		glUniform1i(shaderIF->ppuLoc("projEnum"),2);
+	}
+	else if(ModelView::projType==OBLIQUE)
+	{
+		glUniform1i(shaderIF->ppuLoc("projEnum"),3);
+	}
 }
 
 bool SceneElement::handleCommand(unsigned char anASCIIChar, double ldsX, double ldsY)

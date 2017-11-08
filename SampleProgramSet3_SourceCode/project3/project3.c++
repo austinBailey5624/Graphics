@@ -30,7 +30,7 @@ void set3DViewingInformation(double xyz[6])
 
 
 	//cryph::AffPoint center(0.5 * (xyz[0] + xyz[1]),0.5 * (xyz[2] + xyz[3]),0.5 * (xyz[4] + xyz[5]));
-	cryph::AffPoint center(3.5,3.5,3);
+	cryph::AffPoint center(3.5,4,3.5);
 
 	//cryph::AffPoint eye(0.5 * (xyz[0] + xyz[1]),0.5 * (xyz[2] + xyz[3]),0.5 * (xyz[4] + xyz[5]));
 	cryph::AffPoint eye = center +1.8*delta*direction;
