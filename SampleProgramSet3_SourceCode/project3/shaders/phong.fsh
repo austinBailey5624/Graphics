@@ -53,17 +53,15 @@ float attenuation(vec3 curPos, vec3 lightPos)
 vec4 evaluateLightingModel()
 {
 	int attenuationConstant = 10;
+	int directionalConstant = 3;
 	vec3 vHat;
 	vec3 q = pvaIn.ecPosition;
 	vec3 normal = pvaIn.ecUnitNormal;
-	vec3 ambient = ka * globalAmbient;
-	vec3 diffuse = vec3(0.0, 0.0, 0.0);
-	vec3 specular = vec3(0.0, 0.0, 0.0);
+	vec3 result = vec3(0.0,0.0,0.0);
 
-	if(dot(vHat,normal) < 0) //flip normal if its on the wrong side
-	{
-		normal = -normal;
-	}
+	result += ka * globalAmbient;//add ambient
+
+
 
 	if(projEnum == 1)//perspective
 	{
@@ -76,6 +74,11 @@ vec4 evaluateLightingModel()
 	else //if(projEnum == 2)-oblique
 	{
 		vHat = vec3(0.0, 0.0, 1.0);
+	}
+
+	if(dot(vHat,normal) < 0) //flip normal if its on the wrong side
+	{
+		normal = -normal;
 	}
 
  	for(int i = 0; i<totalLights; i++)
@@ -92,35 +95,34 @@ vec4 evaluateLightingModel()
 			liHat = normalize(currentLightPos.xyz);
 		}
 
-		float atten = attenuation(currentLightPos.xyz, q) * attenuationConstant;
+		float totalAttenuation = attenuation(currentLightPos.xyz, q) * attenuationConstant;
 
-		vec3 ri_hat = normalize(reflect(-liHat, normal));
-		if(dot(ri_hat, vHat) > 0)
+		vec3 riHat = normalize(reflect(-liHat, normal));
+		if(dot(riHat, vHat) > 0)
 		{
-			float rdotv = dot(ri_hat, vHat);
+			float rdotv = dot(riHat, vHat);
 
-			if(currentLightPos.w == 0.0)
+			if(currentLightPos.w == 0.0)//directional
 			{
-				specular += ks * brightness[i] * pow(rdotv, shininess);
+				result += directionalConstant * ks * brightness[i] * pow(rdotv, shininess);// add specular
 			}
 			else
 			{
-				specular += atten * ks * brightness[i] * pow(rdotv, shininess);
+				result += totalAttenuation * ks * brightness[i] * pow(rdotv, shininess);//add specular
 			}
 		}
 		if(dot(liHat, normal) > 0)
 		{
-			if(currentLightPos.w == 0.0)
+			if(currentLightPos.w == 1.0)
 			{
-				diffuse += kd * brightness[i] * dot(liHat, normal);
+				result += totalAttenuation * kd * brightness[i] * dot(liHat, normal);// add diffuse
 			}
 			else
 			{
-				diffuse += atten * kd * brightness[i] * dot(liHat, normal);
+				result += directionalConstant * kd * brightness[i] * dot(liHat, normal);//add diffuse
 			}
 		}
 	}
-	vec3 result = ambient + diffuse + specular;
 
 	result = snapToOne(result);
 

@@ -5,15 +5,9 @@
 
 float SceneElement::lightPos[4*MAX_NUM_LIGHTS] =
 	{
-/*
-		0.25, 0.5, 1.0, 0.0,
-		0.0, 0.0, 0.0, 1.0,
-		-0.25, 0.5, 1.0, 0.0
-*/
-
 		0.5,3.0,0.5,1.0,//1 for positional-left lamp
 		6.5,3.0,0.5,1.0,//right Lamp
-		1.0,1.0,1.0,0.0,//0 for directional-sunlight
+		0.0,1.0,0.0,0.0,//0 for directional-sunlight
 
 	};
 
